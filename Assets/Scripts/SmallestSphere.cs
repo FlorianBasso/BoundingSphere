@@ -9,12 +9,16 @@ public class SmallestSphere : MonoBehaviour {
 	private GameObject sphere;
 	
 	void Start () {
+		//Get the mesh of the object
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 		Vector3[] vertices = mesh.vertices;
 		int[] indices = mesh.triangles;
-		
-		sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		
+		//Create bounding sphere
+		sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere); 
+		//Set the sphere's material transparent
+		sphere.renderer.material.shader = Shader.Find ("Transparent/Diffuse");
+		sphere.renderer.material.color = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+
 		ComputeFromPrimitives(vertices, indices);
 	}
 	public float Radius {
@@ -133,7 +137,7 @@ public class SmallestSphere : MonoBehaviour {
 			_center = O + o;
 		}
 	}
-	
+	//Set the center of the bounding sphere
 	void SetCenter(float x,float y,float z)
 	{
 		sphere.transform.localScale = new Vector3(_radius*2,_radius*2,_radius*2);
